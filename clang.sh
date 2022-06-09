@@ -6,7 +6,7 @@ export CLANG_TRIPLE=aarch64-linux-gnu-
 export ARCH=arm64
 export SUBARCH=arm64
 echo "===================Setup Environment==================="
-git clone --depth=1 https://gitlab.com/jjpprrrr/prelude-clang.git $CLANG_PATH
+git clone --depth=1 https://gitlab.com/jjpprrrr/prelude-clang.git -b 14.0 $CLANG_PATH
 git clone https://github.com/osm0sis/AnyKernel3 $ANYKERNEL_PATH
 sh -c "$(curl -sSL https://github.com/akhilnarang/scripts/raw/master/setup/android_build_env.sh/)"
 echo "=========================Clean========================="
