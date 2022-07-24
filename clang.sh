@@ -6,12 +6,12 @@ export CLANG_TRIPLE=aarch64-linux-gnu-
 export ARCH=arm64
 export SUBARCH=arm64
 echo "===================Setup Environment==================="
-git clone --depth=1 https://github.com/kdrag0n/proton-clang $CLANG_PATH  # https://gitlab.com/jjpprrrr/prelude-clang.git
+git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20210522 $CLANG_PATH  # https://gitlab.com/jjpprrrr/prelude-clang.git
 git clone https://github.com/osm0sis/AnyKernel3 $ANYKERNEL_PATH
 sh -c "$(curl -sSL https://github.com/akhilnarang/scripts/raw/master/setup/android_build_env.sh/)"
 echo "=========================Clean========================="
 make mrproper && git reset --hard HEAD
 echo "=========================Build========================="
-make O=out CC="ccache clang" CXX="ccache clang++" CROSS_COMPILE=$CLANG_PATH/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=$CLANG_PATH/bin/arm-linux-gnueabi- LD=ld.lld m1882_defconfig
+make O=out CC="ccache clang" CXX="ccache clang++" CROSS_COMPILE=$CLANG_PATH/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=$CLANG_PATH/bin/arm-linux-gnueabi- LD=ld.lld gauguin_user_defconfig
 make O=out CC="ccache clang" CXX="ccache clang++" CROSS_COMPILE=$CLANG_PATH/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=$CLANG_PATH/bin/arm-linux-gnueabi- LD=ld.lld 2>&1 | tee out/kernel.log
 
