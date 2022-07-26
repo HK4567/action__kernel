@@ -10,6 +10,7 @@ on:
 
 env:
   TZ: Asia/Shanghai
+  CLANG_PATH: /home/runner/work
 
 jobs:
   build:
@@ -46,23 +47,23 @@ jobs:
           cd /home/runner/work/action_build_kernel/action_build_kernel
           ls -al
           git clone https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b Marshmallow-q1 kernel
-          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 /home/runner/work/clang
+          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 $CLANG_PATH/clang
           
           
       - name: 编译内核
         run: |
           cd kernel/
           git submodule update --init --recursive
-          export PATH="/home/runner/work/clang/bin:$PATH"
+          export PATH="$CLANG_PATH/clang/bin:$PATH"
           make O=out \
                 ARCH=arm64 \
-                CC=/home/runner/work/clang/bin/clang \
-                CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- \
+                CC=$CLANG_PATH/clang/bin/clang \
+                CROSS_COMPILE=$CLANG_PATH/clang/bin/aarch64-linux-gnu- \
                 gauguin_user_defconfig
           make O=out \
                 ARCH=arm64 \
-                CC=/home/runner/work/clang/bin/clang \
-                CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- \
+                CC=$CLANG_PATH/clang/bin/clang \
+                CROSS_COMPILE=$CLANG_PATH/clang/bin/aarch64-linux-gnu- \
                 -j4 2>&1 | tee out/kernel.log
           
 
