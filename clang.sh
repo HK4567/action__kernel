@@ -9,6 +9,7 @@ echo "===================Setup Environment==================="
 git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20210522 $CLANG_PATH  # https://gitlab.com/jjpprrrr/prelude-clang.git
 git clone https://github.com/osm0sis/AnyKernel3 $ANYKERNEL_PATH
 sh -c "$(curl -sSL https://github.com/akhilnarang/scripts/raw/master/setup/android_build_env.sh/)"
+git submodule update --init --recursive
 echo "=========================Clean========================="
 make mrproper && git reset --hard HEAD
 echo "=========================Build========================="
