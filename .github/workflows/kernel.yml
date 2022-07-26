@@ -45,12 +45,16 @@ jobs:
  
       - name: Clone 内核
         run: |
+          ls -al
+          cd /home
+          ls -al
           git clone "${{ steps.config.outputs.kernel_url }}" -b "${{ steps.config.outputs.branch_name }}" kernel
-          
+          df -h
+
       - name: 编译内核
         run: |
-          sudo mv "${{ steps.config.outputs.build_sh }}" $GITHUB_WORKSPACE/kernel
-          cd $GITHUB_WORKSPACE/kernel
+          sudo mv "${{ steps.config.outputs.build_sh }}" /home/kernel
+          cd /home/kernel
           bash ./"${{ steps.config.outputs.build_sh }}"
 
       - name: Upload artifact
