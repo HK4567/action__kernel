@@ -39,7 +39,7 @@ jobs:
           sudo apt -y autoclean
           sudo apt clean
           sudo apt update
-          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu- clang bc bison flex libssl-dev ccache 
+          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache 
 
       - name: Clone 内核
         run: |
@@ -54,15 +54,17 @@ jobs:
         run: |
           cd kernel/
           git submodule update --init --recursive
-          export PATH="$CLANG_PATH/clang/bin:$PATH"
+          PATH="$CLANG_PATH/clang/bin:$PATH"
           make O=out \
                 ARCH=arm64 \
                 CC=$CLANG_PATH/clang/bin/clang \
+                CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=$CLANG_PATH/clang/bin/aarch64-linux-gnu- \
                 gauguin_user_defconfig
           make O=out \
                 ARCH=arm64 \
                 CC=$CLANG_PATH/clang/bin/clang \
+                CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=$CLANG_PATH/clang/bin/aarch64-linux-gnu- \
                 -j4 2>&1 | tee out/kernel.log
           
