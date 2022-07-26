@@ -42,7 +42,7 @@ jobs:
 
       - name: 下载内核
         run: |
-          cd /home/runner/work/
+          cd $GITHUB_WORKSPACE
           git clone https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b Marshmallow-q1 kernel
 
       - name: 下载编译器
@@ -53,25 +53,26 @@ jobs:
           
       - name: 编译内核
         run: |
-          cd /home/runner/work/kernel
+          cd $GITHUB_WORKSPACE/kernel
           git submodule update --init --recursive
-          export CLANG_PATH=/home/runner/work/clang
+          export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
           export
-          as -v
+          ./$GITHUB_WORKSPACE/clang/bin/as -v
+          ./$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu-as -v
           make O=out \
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
-                CROSS_COMPILE=${CLANG_PATH}/bin/aarch64-linux-gnu- \
-                CC=${CLANG_PATH}/bin/clang \
+                CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
+                CC=$GITHUB_WORKSPACE/clang/bin/clang \
                 gauguin_user_defconfig
           echo "-------------------------------------------------------------------------------------------"
           echo "-------------------------------------------------------------------------------------------"
           make O=out \
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
-                CROSS_COMPILE=${CLANG_PATH}/bin/aarch64-linux-gnu- \
-                CC=${CLANG_PATH}/bin/clang \
+                CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
+                CC=$GITHUB_WORKSPACE/clang/bin/clang \
                 -j4 2>&1 | tee out/kernel.log
           
 
