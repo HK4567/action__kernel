@@ -10,7 +10,6 @@ on:
 
 env:
   TZ: Asia/Shanghai
-  CLANG_PATH: /home/runner/work
 
 jobs:
   build:
@@ -41,31 +40,32 @@ jobs:
           sudo apt update
           sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache 
 
-      - name: Clone 内核
+      - name: 下载内核
         run: |
-          ls -al
           cd /home/runner/work/action_build_kernel/action_build_kernel
-          ls -al
           git clone https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b Marshmallow-q1 kernel
-          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 $CLANG_PATH/clang
+          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 /home/runner/work/clang
           
           
       - name: 编译内核
         run: |
           cd kernel/
           git submodule update --init --recursive
-          PATH="$CLANG_PATH/clang/bin:$PATH"
+          export CLANG_PATH=/home/runner/work/clang
+          export PATH=${CLANG_PATH}/bin:${PATH}
           make O=out \
                 ARCH=arm64 \
-                CC=$CLANG_PATH/clang/bin/clang \
+                CC=${CLANG_PATH}/bin/clang \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
-                CROSS_COMPILE=$CLANG_PATH/clang/bin/aarch64-linux-gnu- \
+                CROSS_COMPILE=${CLANG_PATH}/bin/aarch64-linux-gnu- \
                 gauguin_user_defconfig
+          echo "-------------------------------------------------------------------------------------------"
+          echo "-------------------------------------------------------------------------------------------"
           make O=out \
                 ARCH=arm64 \
-                CC=$CLANG_PATH/clang/bin/clang \
+                CC=${CLANG_PATH}/bin/clang \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
-                CROSS_COMPILE=$CLANG_PATH/clang/bin/aarch64-linux-gnu- \
+                CROSS_COMPILE=${CLANG_PATH}/bin/aarch64-linux-gnu- \
                 -j4 2>&1 | tee out/kernel.log
           
 
