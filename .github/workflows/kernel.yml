@@ -13,7 +13,6 @@ env:
 
 jobs:
   build:
-    if: github.event.repository.owner.id == github.event.sender.id
     runs-on: ubuntu-latest
 
     steps:
@@ -30,32 +29,37 @@ jobs:
       - name: Check Out
         uses: actions/checkout@v2
 
-      - name: Load Configuration
-        uses: falti/dotenv-action@v0.2.5
-        id: config
-        with:
-          path: config.env
-
-      - name: Check Configuration
+      - name: Prepare the environment
         run: |
-          function required () { if ! [[ "$1" ]]; then echo "$2 variable can't be null." && exit 1; fi }
-          required "${{ steps.config.outputs.build_sh }}" "build_sh config"
-          required "${{ steps.config.outputs.branch_name }}" "BRANCH_NAME config"
-          required "${{ steps.config.outputs.kernel_url }}" "KERNEL_URL config"
- 
+          docker rmi `docker images -q`
+          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/sudo apt/sources.list.d
+          sudo apt -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          sudo apt -y autoremove --purge
+          sudo apt -y autoclean
+          sudo apt clean
+          sudo apt update
+          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu- clang bc bison flex libssl-dev ccache 
+
       - name: Clone 内核
         run: |
           ls -al
           cd /home/runner/work/action_build_kernel/action_build_kernel
           ls -al
-          git clone "${{ steps.config.outputs.kernel_url }}" -b "${{ steps.config.outputs.branch_name }}" kernel
-          df -h
-
+          git clone https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b Marshmallow-q1 kernel
+          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 /home/runner/work/clang
+          
+          
+          
+          
       - name: 编译内核
         run: |
-          sudo mv "${{ steps.config.outputs.build_sh }}" /home/runner/work/action_build_kernel/action_build_kernel/kernel
-          cd /home/runner/work/action_build_kernel/action_build_kernel/kernel
-          bash ./"${{ steps.config.outputs.build_sh }}"
+          cd kernel/
+          git submodule update --init --recursive
+          export ARCH=arm64
+          export SUBARCH=arm64
+          make O=out CC=/home/runner/work/clang/bin/clang-12 CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- gauguin_user_defconfig
+          make O=out CC=/home/runner/work/clang/bin/clang-12 CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- -j4 2>&1 | tee out/kernel.log
+          
 
       - name: Upload artifact
         uses: actions/upload-artifact@master
