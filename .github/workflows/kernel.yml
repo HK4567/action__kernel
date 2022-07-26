@@ -61,17 +61,17 @@ jobs:
           as -v
           make O=out \
                 ARCH=arm64 \
-                CC=${CLANG_PATH}/bin/clang \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=${CLANG_PATH}/bin/aarch64-linux-gnu- \
+                CC=${CLANG_PATH}/bin/clang \
                 gauguin_user_defconfig
           echo "-------------------------------------------------------------------------------------------"
           echo "-------------------------------------------------------------------------------------------"
           make O=out \
                 ARCH=arm64 \
-                CC=${CLANG_PATH}/bin/clang \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=${CLANG_PATH}/bin/aarch64-linux-gnu- \
+                CC=${CLANG_PATH}/bin/clang \
                 -j4 2>&1 | tee out/kernel.log
           
 
