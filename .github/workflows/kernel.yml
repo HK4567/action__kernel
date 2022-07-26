@@ -1,25 +1,34 @@
 name: kernel_build
 
 on:
-  watch:
-    types: [started]
+  workflow_dispatch:
+    inputs:
+      STRAT:
+        description: 'STRAT'
+        required: true
+        default: 'strat'
+
+env:
+  TZ: Asia/Shanghai
 
 jobs:
   build:
+    if: github.event.repository.owner.id == github.event.sender.id
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2  
-
       - name: Maximize build disk space
-       uses: easimon/maximize-build-space@v6
-       with:
-         root-reserve-mb: 1024
-         swap-size-mb: 10240
-         remove-dotnet: 'true'
-         temp-reserve-mb: 1024
-         remove-android: 'true'
-         remove-haskell: 'true'
+        uses: easimon/maximize-build-space@v6
+        with:
+          root-reserve-mb: 1024
+          swap-size-mb: 10240
+          remove-dotnet: 'true'
+          temp-reserve-mb: 1024
+          remove-android: 'true'
+          remove-haskell: 'true'
+
+      - name: Check Out
+        uses: actions/checkout@v2
 
       - name: Load Configuration
         uses: falti/dotenv-action@v0.2.5
