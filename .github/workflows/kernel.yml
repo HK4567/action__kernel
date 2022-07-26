@@ -57,8 +57,17 @@ jobs:
           git submodule update --init --recursive
           export ARCH=arm64
           export SUBARCH=arm64
-          make O=out CC=/home/runner/work/clang/bin/clang-12 CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- gauguin_user_defconfig
-          make O=out CC=/home/runner/work/clang/bin/clang-12 CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- AS=/home/runner/work/clang/bin/aarch64-linux-gnu-as -j4 2>&1 | tee out/kernel.log
+          make O=out \
+                CC=/home/runner/work/clang/bin/clang-12 \
+                CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- \
+                gauguin_user_defconfig
+          make O=out \
+                CC=/home/runner/work/clang/bin/clang-12 \
+                CROSS_COMPILE=/home/runner/work/clang/bin/aarch64-linux-gnu- \
+                AS=/home/runner/work/clang/bin/aarch64-linux-gnu-as \
+                AR=/home/runner/work/clang/bin/aarch64-linux-gnu-ar \
+                LD=/home/runner/work/clang/bin/aarch64-linux-gnu-ld \
+                -j4 2>&1 | tee out/kernel.log
           
 
       - name: Upload artifact
