@@ -55,8 +55,6 @@ jobs:
           git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
-          ${CROSS_COMPILE}ld -v
-          echo "---------------------------------------------------------------------------------------------------------------------'
           make O=out \
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
@@ -77,4 +75,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
          name: kernel
-         path: kernel/out/arch/arm64/boot/Image
+         path: /out/arch/arm64/boot/Image
