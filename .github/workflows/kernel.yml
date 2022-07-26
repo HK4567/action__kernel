@@ -1,20 +1,26 @@
-name: action_kernel
+name: kernel_build
 
 on:
   watch:
     types: [started]
-#  push:
-#    branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
-   
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2  
- 
+
+      - name: Maximize build disk space
+       uses: easimon/maximize-build-space@v6
+       with:
+         root-reserve-mb: 1024
+         swap-size-mb: 10240
+         remove-dotnet: 'true'
+         temp-reserve-mb: 1024
+         remove-android: 'true'
+         remove-haskell: 'true'
+
       - name: Load Configuration
         uses: falti/dotenv-action@v0.2.5
         id: config
@@ -24,16 +30,15 @@ jobs:
       - name: Check Configuration
         run: |
           function required () { if ! [[ "$1" ]]; then echo "$2 variable can't be null." && exit 1; fi }
-          required "${{ steps.config.outputs.kernel_name }}" "KERNEL_NAME config"
           required "${{ steps.config.outputs.build_sh }}" "build_sh config"
           required "${{ steps.config.outputs.branch_name }}" "BRANCH_NAME config"
           required "${{ steps.config.outputs.kernel_url }}" "KERNEL_URL config"
  
-      - name: Git kernel
+      - name: Clone 内核
         run: |
           git clone "${{ steps.config.outputs.kernel_url }}" -b "${{ steps.config.outputs.branch_name }}" kernel
           
-      - name: make kernel
+      - name: 编译内核
         run: |
           sudo mv "${{ steps.config.outputs.build_sh }}" $GITHUB_WORKSPACE/kernel
           cd $GITHUB_WORKSPACE/kernel
