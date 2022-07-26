@@ -69,10 +69,10 @@ jobs:
                 CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
                 CC=$GITHUB_WORKSPACE/clang/bin/clang \
                 -j4 2>&1 | tee out/kernel.log
-          
+          ls
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
          name: kernel
-         path: $GITHUB_WORKSPACE/kernel/out/arch/arm64/boot/Image
+         path: ./out/arch/arm64/boot/Image
