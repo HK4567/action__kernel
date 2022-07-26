@@ -76,12 +76,12 @@ jobs:
           git clone https://github.com/osm0sis/AnyKernel3.git
           mv out/arch/arm64/boot/Image AnyKernel3/
           zip -r AnyKernel3.zip AnyKernel3/
-          ls
           
       - name: 上传文件
-        uses: svenstaro/upload-release-action@v2
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.work }}
         with:
-         file: AnyKernel3.zip
-         asset_name: kernel
-         tag: ${{ github.ref }}
-         body: Anykernel
+          file: "AnyKernel3.zip"
+          tags: true
+          draft: true
