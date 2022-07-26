@@ -29,7 +29,7 @@ jobs:
       - name: Check Out
         uses: actions/checkout@v2
 
-      - name: Prepare the environment
+      - name: 清理文件/下载依赖
         run: |
           docker rmi `docker images -q`
           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/sudo apt/sources.list.d
@@ -38,7 +38,7 @@ jobs:
           sudo apt -y autoclean
           sudo apt clean
           sudo apt update
-          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache 
+          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache zip 
 
       - name: 下载内核
         run: |
@@ -69,10 +69,17 @@ jobs:
                 CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
                 CC=$GITHUB_WORKSPACE/clang/bin/clang \
                 -j4 2>&1 | tee out/kernel.log
+ 
+      - name: Anykernel3
+        run: |
+          cd $GITHUB_WORKSPACE/kernel
+          git clone https://github.com/osm0sis/AnyKernel3.git
+          mv out/arch/arm64/boot/Image AnyKernel3/
+          zip -r AnyKernel3.zip AnyKernel3/
           ls
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+          
+      - name: 上传文件
+        uses: softprops/action-gh-release@v1
         with:
-         name: kernel
-         path: out/arch/arm64/boot/Image
+         files: AnyKernel3.zip
+
