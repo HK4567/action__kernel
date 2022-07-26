@@ -75,4 +75,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
          name: kernel
-         path: $GITHUB_WORKSPACE/kernel/out/arch/arm64/boot
+         path: $GITHUB_WORKSPACE/kernel/out/arch/arm64/boot/Image
