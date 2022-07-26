@@ -79,9 +79,9 @@ jobs:
           ls
           
       - name: 上传文件
-        uses: softprops/action-gh-release@v1
+        uses: svenstaro/upload-release-action@v2
         with:
-         files: AnyKernel3.zip
-         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
-         tag_name: ${{ github.run_id }}
+         file: AnyKernel3.zip
+         asset_name: kernel
+         tag: ${{ github.ref }}
          body: Anykernel
