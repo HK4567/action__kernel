@@ -47,7 +47,7 @@ jobs:
           ls -al
           git clone https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b Marshmallow-q1 kernel
           git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 /home/runner/work/clang
-          
+          chmod -R 777 /home/runner/work/clang
           
           
           
