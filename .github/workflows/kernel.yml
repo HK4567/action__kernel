@@ -53,7 +53,7 @@ jobs:
           
       - name: 编译内核
         run: |
-          cd kernel/
+          cd /home/runner/work/kernel
           git submodule update --init --recursive
           export CLANG_PATH=/home/runner/work/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
