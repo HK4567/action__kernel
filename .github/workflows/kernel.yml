@@ -48,8 +48,6 @@ jobs:
       - name: 下载编译器
         run: |
           git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 clang
-          ls -al clang/
-          export
           
       - name: 编译内核
         run: |
@@ -57,9 +55,6 @@ jobs:
           git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
-          export
-          ./$GITHUB_WORKSPACE/clang/bin/as -v
-          ./$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu-as -v
           make O=out \
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
