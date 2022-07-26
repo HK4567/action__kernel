@@ -55,6 +55,8 @@ jobs:
           git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
+          /$GITHUB_WORKSPACE/clang/bin/as -v
+          /$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu-as -v
           make O=out \
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
