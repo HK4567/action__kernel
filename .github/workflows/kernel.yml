@@ -76,11 +76,12 @@ jobs:
           git clone https://github.com/osm0sis/AnyKernel3.git
           mv out/arch/arm64/boot/Image AnyKernel3/
           zip -r AnyKernel3.zip AnyKernel3/
-          
+          ls -al
+          tree
       - name: 上传文件
         uses: ncipollo/release-action@v1.10.0
         with:
-          artifacts: "AnyKernel3.zip"
+          artifacts: "${{ github.workspace }}/kernel/AnyKernel3.zip"
           name: " kernel "
           tag: " ${{ github.run_number }} "
           token: ${{ secrets.work }}
