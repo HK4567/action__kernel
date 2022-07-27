@@ -55,6 +55,8 @@ jobs:
           git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
+          export LOGNAME=builder
+          export HOSTNAME=hk4567
           make O=out \
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
@@ -68,7 +70,7 @@ jobs:
                 CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
                 CC=$GITHUB_WORKSPACE/clang/bin/clang \
-                -j4 2>&1 | tee out/kernel.log
+                -j4 2>&1 | tee kernel.log
  
       - name: Anykernel3
         run: |
@@ -76,8 +78,7 @@ jobs:
           git clone https://github.com/osm0sis/AnyKernel3.git
           mv out/arch/arm64/boot/Image AnyKernel3/
           zip -r AnyKernel3.zip AnyKernel3/
-          ls -al
-          tree
+
       - name: 上传文件
         uses: ncipollo/release-action@v1.10.0
         with:
