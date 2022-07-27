@@ -61,7 +61,6 @@ jobs:
                 CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
                 CC=$GITHUB_WORKSPACE/clang/bin/clang \
-                LD=ld.lld \
                 -j4 2>&1 | tee kernel.log
  
       - name: Anykernel3
