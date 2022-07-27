@@ -47,7 +47,7 @@ jobs:
 
       - name: 下载编译器
         run: |
-          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20201017 clang
+          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20210123 clang
           
       - name: 编译内核
         run: |
