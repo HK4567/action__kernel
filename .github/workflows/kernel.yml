@@ -36,7 +36,7 @@ jobs:
       - name: 下载内核
         run: |
           cd $GITHUB_WORKSPACE
-          git clone --depth=1 https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b Marshmallow-q1 kernel
+          git clone --depth=1 https://github.com/AndroidBlobs/kernel_xiaomi_gauguin.git -b LA.UM.8.13.r1-09200-SAIPAN.0 kernel
 
       - name: 下载编译器
         run: |
