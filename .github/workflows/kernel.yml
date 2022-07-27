@@ -38,7 +38,7 @@ jobs:
           sudo apt -y autoclean
           sudo apt clean
           sudo apt update
-          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache zip 
+          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache zip tree 
 
       - name: 下载内核
         run: |
