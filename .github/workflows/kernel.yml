@@ -29,15 +29,8 @@ jobs:
       - name: 查看
         uses: actions/checkout@v3
 
-      - name: 清理文件/下载依赖
+      - name: 下载依赖
         run: |
-          docker rmi `docker images -q`
-          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/sudo apt/sources.list.d
-          sudo apt -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
-          sudo apt -y autoremove --purge
-          sudo apt -y autoclean
-          sudo apt clean
-          sudo apt update
           sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache zip tree 
 
       - name: 下载内核
@@ -55,8 +48,6 @@ jobs:
           git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
-          export LOGNAME=builder
-          export HOSTNAME=hk4567
           make O=out \
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-gnu- \
