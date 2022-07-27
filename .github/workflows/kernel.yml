@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Maximize build disk space
+      - name: 最大化构建磁盘空间
         uses: easimon/maximize-build-space@v6
         with:
           root-reserve-mb: 1024
@@ -26,8 +26,8 @@ jobs:
           remove-android: 'true'
           remove-haskell: 'true'
 
-      - name: Check Out
-        uses: actions/checkout@v2
+      - name: 查看
+        uses: actions/checkout@v3
 
       - name: 清理文件/下载依赖
         run: |
