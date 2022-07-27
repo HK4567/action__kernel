@@ -78,10 +78,9 @@ jobs:
           zip -r AnyKernel3.zip AnyKernel3/
           
       - name: 上传文件
-        uses: xresloader/upload-to-github-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.work }}
+        uses: ncipollo/release-action@v1.10.0
         with:
-          file: "AnyKernel3.zip"
-          tags: true
-          draft: true
+          artifacts: "AnyKernel3.zip"
+          name: " kernel "
+          tag: " ${{ github.run_number }} "
+          token: ${{ secrets.work }}
