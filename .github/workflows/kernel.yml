@@ -36,7 +36,7 @@ jobs:
       - name: 下载内核
         run: |
           cd $GITHUB_WORKSPACE
-          git clone --depth=1 https://github.com/kmou424/android_kernel_xiaomi_sm8150 -b miui-r kernel
+          git clone --depth=1 https://github.com/HK4567/android_kernel_xiaomi_sm8150 -b miui-r kernel
 
       - name: 下载编译器
         run: |
@@ -45,7 +45,7 @@ jobs:
       - name: 编译内核
         run: |
           cd $GITHUB_WORKSPACE/kernel
-          git revert 3ca3ace
+          
           git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
