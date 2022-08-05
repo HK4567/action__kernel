@@ -55,6 +55,10 @@ jobs:
                 CC=$GITHUB_WORKSPACE/clang/bin/clang \
                 cepheus_stock_defconfig
           echo "-------------------------------------------------------------------------------------------"
+          cd out
+          rm -rf .config
+          wget https://raw.githubusercontent.com/HK4567/action_build_kernel/main/.config
+          cd ..
           echo "-------------------------------------------------------------------------------------------"
           make O=out \
                 ARCH=arm64 \
