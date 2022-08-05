@@ -36,7 +36,7 @@ jobs:
       - name: 下载内核
         run: |
           cd $GITHUB_WORKSPACE
-          git clone --depth=1 https://github.com/RuRuTiaSaMa/android_kernel_xiaomi_sm8150 -b R kernel
+          git clone --depth=1 https://github.com/kmou424/android_kernel_xiaomi_sm8150 -b miui-r kernel
 
       - name: 下载编译器
         run: |
@@ -45,7 +45,7 @@ jobs:
       - name: 编译内核
         run: |
           cd $GITHUB_WORKSPACE/kernel
-          #git submodule update --init --recursive
+          git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
           make O=out \
@@ -53,12 +53,9 @@ jobs:
                 CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
                 CC=$GITHUB_WORKSPACE/clang/bin/clang \
-                cepheus_stock_defconfig
+                cepheus_defconfig
           echo "-------------------------------------------------------------------------------------------"
-          cd out
-          rm -rf .config
-          wget https://raw.githubusercontent.com/HK4567/action_build_kernel/main/.config
-          cd ..
+          
           echo "-------------------------------------------------------------------------------------------"
           make O=out \
                 ARCH=arm64 \
