@@ -45,7 +45,7 @@ jobs:
       - name: 编译内核
         run: |
           cd $GITHUB_WORKSPACE/kernel
-          git revert 3ca3ace
+          
           git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/clang
           export PATH=${CLANG_PATH}/bin:${PATH}
