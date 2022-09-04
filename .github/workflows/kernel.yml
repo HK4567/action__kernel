@@ -36,7 +36,7 @@ jobs:
       - name: 下载内核
         run: |
           cd $GITHUB_WORKSPACE
-          git clone --depth=1 https://github.com/HK4567/android_kernel_xiaomi_sm8150 -b miui-r kernel
+          git clone --depth=1 https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b Marshmallow kernel
 
       - name: 下载编译器
         run: |
@@ -54,7 +54,7 @@ jobs:
                 CLANG_TRIPLE=aarch64-linux-gnu- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
                 CC=$GITHUB_WORKSPACE/clang/bin/clang \
-                cepheus_defconfig
+                gauguin_user_defconfig
           echo "-------------------------------------------------------------------------------------------"
           
           echo "-------------------------------------------------------------------------------------------"
@@ -69,13 +69,14 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/kernel
           git clone https://github.com/osm0sis/AnyKernel3.git
-          mv out/arch/arm64/boot/ AnyKernel3/
+          mv out/arch/arm64/boot/Image AnyKernel3/
+          mv out/arch/arm64/boot/dtbo.img AnyKernel3/
           zip -r AnyKernel3.zip AnyKernel3/
 
       - name: 上传文件
         uses: ncipollo/release-action@v1.10.0
         with:
           artifacts: "${{ github.workspace }}/kernel/AnyKernel3.zip"
-          name: " kernel "
+          name: " kernel for n9p "
           tag: " ${{ github.run_number }} "
           token: ${{ secrets.work }}
