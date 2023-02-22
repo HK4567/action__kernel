@@ -74,7 +74,7 @@ jobs:
           git clone https://github.com/osm0sis/AnyKernel3.git
           mv out/arch/arm64/boot/Image AnyKernel3/
           mv out/arch/arm64/boot/dtbo.img AnyKernel3/
-          zip -r -j AnyKernel3.zip AnyKernel3/
+          zip -r AnyKernel3.zip AnyKernel3/
 
       - name: 上传文件
         uses: ncipollo/release-action@v1.10.0
