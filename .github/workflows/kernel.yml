@@ -31,7 +31,7 @@ jobs:
 
       - name: 下载依赖
         run: |
-          sudo apt -y install git python python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache zip tree 
+          sudo apt -y install git python2 python3 gcc-aarch64-linux-gnu clang bc bison flex libssl-dev ccache zip tree 
 
       - name: 下载内核
         run: |
