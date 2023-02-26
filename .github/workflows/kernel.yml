@@ -46,7 +46,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/kernel
           
-          git submodule update --init --recursive
+          #git submodule update --init --recursive
           export CLANG_PATH=$GITHUB_WORKSPACE/gcc
           export PATH=${CLANG_PATH}/bin:${PATH}
           #echo CONFIG_USB_SERIAL=y >> arch/arm64/configs/vendor/gauguin_user_defconfig
@@ -57,6 +57,7 @@ jobs:
                 CLANG_TRIPLE=aarch64-linux-android- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android- \
                 CC=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android-gcc \
+                LD=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android-ld \
                 lineageos_h930_defconfig
           echo "-------------------------------------------------------------------------------------------"
           #wget https://raw.githubusercontent.com/HK4567/action_build_kernel/main/.config1
@@ -69,8 +70,9 @@ jobs:
                 CLANG_TRIPLE=aarch64-linux-android- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android- \
                 CC=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android-gcc \
+                LD=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android-ld
                 -j4
-          ls out/
+          #ls out/
           #ls out/.tmp_versions/
           
  
@@ -78,8 +80,8 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/kernel
           git clone https://github.com/osm0sis/AnyKernel3.git
-          mv out/arch/arm64/boot/Image AnyKernel3/
-          mv out/arch/arm64/boot/dtbo.img AnyKernel3/
+          mv out/arch/arm64/boot/Image-* AnyKernel3/
+          #mv out/arch/arm64/boot/dtbo.img AnyKernel3/
           
           zip -r AnyKernel3.zip AnyKernel3/
 
