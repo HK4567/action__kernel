@@ -68,7 +68,7 @@ jobs:
                 ARCH=arm64 \
                 CLANG_TRIPLE=aarch64-linux-android- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android- \
-                CC=$GITHUB_WORKSPACE/gcc/bin/gcc \
+                CC=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android-gcc \
                 -j4
           ls out/
           #ls out/.tmp_versions/
