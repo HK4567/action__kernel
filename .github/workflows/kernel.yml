@@ -57,7 +57,7 @@ jobs:
                 CLANG_TRIPLE=aarch64-linux-android- \
                 CROSS_COMPILE=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android- \
                 CC=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android-gcc \
-                gauguin_user_defconfig
+                lineageos_h930_defconfig
           echo "-------------------------------------------------------------------------------------------"
           #wget https://raw.githubusercontent.com/HK4567/action_build_kernel/main/.config1
           ls
