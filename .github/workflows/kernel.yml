@@ -36,39 +36,39 @@ jobs:
       - name: 下载内核
         run: |
           cd $GITHUB_WORKSPACE
-          git clone --depth=1 https://github.com/HK4567/android_kernel_xiaomi_gauguin.git -b nethunter kernel
+          git clone --depth=1 https://github.com/Slowhy/android_kernel_lge_msm8998.git -b  kernel
 
       - name: 下载编译器
         run: |
-          git clone --depth=1 https://github.com/kdrag0n/proton-clang -b 20210123 clang
+          git clone --depth=1 https://github.com/HyperLYP/GCC-4.9.git -b gcc4.9 gcc
           
       - name: 编译内核
         run: |
           cd $GITHUB_WORKSPACE/kernel
           
           git submodule update --init --recursive
-          export CLANG_PATH=$GITHUB_WORKSPACE/clang
+          export CLANG_PATH=$GITHUB_WORKSPACE/gcc
           export PATH=${CLANG_PATH}/bin:${PATH}
           #echo CONFIG_USB_SERIAL=y >> arch/arm64/configs/vendor/gauguin_user_defconfig
           #echo CONFIG_USB_SERIAL_QUALCOMM=y >> arch/arm64/configs/vendor/gauguin_user_defconfig
           #cat arch/arm64/configs/vendor/gauguin_user_defconfig
           make O=out \
                 ARCH=arm64 \
-                CLANG_TRIPLE=aarch64-linux-gnu- \
-                CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
-                CC=$GITHUB_WORKSPACE/clang/bin/clang \
+                CLANG_TRIPLE=aarch64-linux-android- \
+                CROSS_COMPILE=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android- \
+                CC=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android-gcc \
                 gauguin_user_defconfig
           echo "-------------------------------------------------------------------------------------------"
-          wget https://raw.githubusercontent.com/HK4567/action_build_kernel/main/.config1
+          #wget https://raw.githubusercontent.com/HK4567/action_build_kernel/main/.config1
           ls
-          mv .config1 out/.config
+          #mv .config1 out/.config
 
           echo "-------------------------------------------------------------------------------------------"
           make O=out \
                 ARCH=arm64 \
-                CLANG_TRIPLE=aarch64-linux-gnu- \
-                CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
-                CC=$GITHUB_WORKSPACE/clang/bin/clang \
+                CLANG_TRIPLE=aarch64-linux-android- \
+                CROSS_COMPILE=$GITHUB_WORKSPACE/gcc/bin/aarch64-linux-android- \
+                CC=$GITHUB_WORKSPACE/gcc/bin/gcc \
                 -j4
           ls out/
           ls out/.tmp_versions/
