@@ -36,7 +36,7 @@ jobs:
       - name: 下载内核
         run: |
           cd $GITHUB_WORKSPACE
-          git clone --depth=1 https://github.com/Slowhy/android_kernel_lge_msm8998.git -b  kernel
+          git clone --depth=1 https://github.com/Slowhy/android_kernel_lge_msm8998.git -b vaccine kernel
 
       - name: 下载编译器
         run: |
